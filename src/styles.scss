@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+@use "bootstrap";
+@use "bootstrap-icons";
+
+$mf-bg: #0c0e13;
+$mf-bg-elev: #12151c;
+$mf-text: #ffffff;
+
+$cor1: #3f171a;
+$cor2: #3d1616;
+$cor3: #5c1d1d;
+
+.text-mf {
+    color: #c51c1c;
+}
+
+.body {
+    background: $mf-bg;
+    color: $mf-text;    
+}
+
+.app-background-gradiente {
+    background-image: linear-gradient(
+        to right,
+        $cor1,
+        $cor2,
+        $cor3,
+        $cor2,
+        $cor1
+    );
+    background-size: 200% 100%;
+    background-repeat: repeat-x;
+    animation: moverGradiente 25s linear infinite;
+}
+
+@keyframes moverGradiente {
+    from { background-position:   0% 0; }
+    to   { background-position: 200% 0; }
+}
