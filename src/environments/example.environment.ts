@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
+    production: true,
     apiKey: 'Bearer <sua-chave-aqui>' 
 }

@@ -9,15 +9,10 @@ $cor1: #3f171a;
 $cor2: #3d1616;
 $cor3: #5c1d1d;
 
-//Bootstrap
-
-
-//Navbar
 .text-mf {
     color: #c51c1c;
 }
 
-//Listagem
 .app-banner-principal {
     background-size: cover;
     background-repeat: no-repeat;
@@ -29,11 +24,6 @@ $cor3: #5c1d1d;
 .app-container-principal {
     min-height: 400px;
     padding-top: 4rem;
-}
-
-.body {
-    background: $mf-bg;
-    color: $mf-text;    
 }
 
 .app-background-gradiente {
@@ -50,6 +40,32 @@ $cor3: #5c1d1d;
     animation: moverGradiente 25s linear infinite;
     background-position: center center;
     background-attachment: fixed; 
+}
+
+.app-scrollbar-customizado {
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #c51c1c;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: #ffffff;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: rgb(172, 182, 182);
+        }
+    }
+}
+
+.body {
+    background: $mf-bg;
+    color: $mf-text;    
 }
 
 @keyframes moverGradiente {
