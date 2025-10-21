@@ -13,6 +13,30 @@ $cor3: #5c1d1d;
     color: #c51c1c;
 }
 
+.container {
+    max-width: 1200px !important;
+}
+
+.btn-group.rounded-pill {
+    border: 1px solid #c51c1c; 
+}
+
+.btn-group.rounded-pill .btn {
+    border-radius: 50rem !important;
+    transition: all 0.2s ease;
+
+    width: 100px;
+    height: 25px;
+    color: #c51c1c;
+    font-size: 13px;
+}
+
+.btn-group.rounded-pill .btn-check:checked + .btn {
+    background-color: #c51c1c;
+    color: #fff;
+    font-weight: 600;
+}
+
 .app-banner-principal {
     background-size: cover;
     background-repeat: no-repeat;

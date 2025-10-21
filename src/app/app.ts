@@ -4,18 +4,30 @@ import { MidiaService } from './services/midia-service';
 import { Navbar } from "./components/navbar/navbar";
 import { BannerPrincipal } from "./components/banner-principal/banner-principal";
 import { AsyncPipe } from '@angular/common';
-import { tap } from 'rxjs';
+import { BehaviorSubject, switchMap, tap } from 'rxjs';
+import { TipoMidia } from './models/tipo-midia';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, RouterOutlet, Navbar, BannerPrincipal],
+  imports: [AsyncPipe, Navbar, BannerPrincipal],
   templateUrl: "./app.html",
   styleUrl: "./app.scss"
 })
 export class App {
-  private readonly midiaService = inject(MidiaService);
+  protected readonly midiaService = inject(MidiaService);
+  protected readonly tipoMidia = TipoMidia;
 
-  // funciona como o OnInit
-  protected readonly midiasPopulares$ = this.midiaService.selecionarMidiasPopulares()
-  .pipe(tap((x) => console.log(x)));
+  protected readonly midiasPopularesSubject$ = new BehaviorSubject<TipoMidia>(TipoMidia.Filme);
+
+  protected readonly midiasPopulares$ = this.midiasPopularesSubject$.pipe(
+    switchMap((tipo) => this.midiaService.selecionarMidiasPopulares(tipo),
+  ));
+
+  protected readonly midiasMaisVotadasSubject$ = new BehaviorSubject<TipoMidia>(TipoMidia.Filme);
+
+  protected readonly midiasMaisVotadas$ = this.midiasMaisVotadasSubject$.pipe(
+    switchMap((tipo) => this.midiaService.selecionarMidiasMaisVotadas(tipo),
+  ));
+
+  protected readonly filmesEmCartaz$ = this.midiaService.selecionarFilmesEmCartaz();
 }
