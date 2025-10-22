@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { MidiaApiResponse } from '../models/midia-api-response';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TipoMidia } from '../models/tipo-midia';
+import { DetalhesMidia } from '../models/detalhes-midia';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,30 @@ export class MidiaService {
         },
       })
       .pipe(map(this.mapFilmes));
+  }
+
+  public selecionarDetalhesMidiaPorID(tipo: TipoMidia, idMidia: number): Observable<DetalhesMidia> {
+    const tipoSelecionado = tipo === 'filme' ? 'movie' : 'tv';
+
+    const urlCompleto = `${this.urlBase}/${tipoSelecionado}/${idMidia}?language=pt-BR`;
+
+    return this.http
+      .get<DetalhesMidia>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map((resposta) => this.mapDetalhesMidia(resposta, tipo)));
+  }
+
+  private mapDetalhesMidia(x: DetalhesMidia, tipo: TipoMidia): DetalhesMidia {
+    return {
+      ...x,
+      type: tipo,
+      vote_average: x.vote_average * 10,
+      poster_path: 'https://image.tmdb.org/t/p/w500/' + x.poster_path,
+      backdrop_path: 'https://image.tmdb.org/t/p/original/' + x.backdrop_path,
+    };
   }
 
   private mapMidias(x: MidiaApiResponse, tipoMidia: TipoMidia): MidiaApiResponse {
