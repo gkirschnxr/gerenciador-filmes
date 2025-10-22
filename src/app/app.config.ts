@@ -1,11 +1,18 @@
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter, Routes } from '@angular/router';
 
-const routes: Routes = [
-  { path: '', redirectTo: 'filmes', pathMatch: 'full'},
-]
-
+export const routes: Routes = [
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  {
+    path: 'inicio',
+    loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
+  },
+];
 
 export const appConfig: ApplicationConfig = {
   providers: [

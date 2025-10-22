@@ -6,7 +6,7 @@ import { map } from 'rxjs';
 import { TipoMidia } from '../models/tipo-midia';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MidiaService {
   private readonly http = inject(HttpClient);
@@ -15,35 +15,41 @@ export class MidiaService {
   public selecionarMidiasPopulares(tipo: TipoMidia) {
     const tipoSelecionado = tipo === 'filme' ? 'movie' : 'tv';
 
-    const urlCompleto = `${this.urlBase}/${tipoSelecionado}/popular?language=pt-BR`
+    const urlCompleto = `${this.urlBase}/${tipoSelecionado}/popular?language=pt-BR`;
 
-    return this.http.get<MidiaApiResponse>(urlCompleto, { 
-      headers: {
-        Authorization: environment.apiKey,
-      },
-    }).pipe(map(this.mapImagens));
+    return this.http
+      .get<MidiaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map(this.mapImagens));
   }
 
   public selecionarMidiasMaisVotadas(tipo: TipoMidia) {
     const tipoSelecionado = tipo === 'filme' ? 'movie' : 'tv';
 
-    const urlCompleto = `${this.urlBase}/${tipoSelecionado}/top_rated?language=pt-BR`
+    const urlCompleto = `${this.urlBase}/${tipoSelecionado}/top_rated?language=pt-BR`;
 
-    return this.http.get<MidiaApiResponse>(urlCompleto, { 
-      headers: {
-        Authorization: environment.apiKey,
-      },
-    }).pipe(map(this.mapImagens));
+    return this.http
+      .get<MidiaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map(this.mapImagens));
   }
 
   public selecionarFilmesEmCartaz() {
-    const urlCompleto = `${this.urlBase}/movie/now_playing?language=pt-BR`
+    const urlCompleto = `${this.urlBase}/movie/now_playing?language=pt-BR`;
 
-    return this.http.get<MidiaApiResponse>(urlCompleto, { 
-      headers: {
-        Authorization: environment.apiKey,
-      },
-    }).pipe(map(this.mapImagens));
+    return this.http
+      .get<MidiaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map(this.mapImagens));
   }
 
   private mapImagens(x: MidiaApiResponse): MidiaApiResponse {
@@ -54,6 +60,6 @@ export class MidiaService {
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
       })),
-      };
+    };
   }
 }
