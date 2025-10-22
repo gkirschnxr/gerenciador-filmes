@@ -23,7 +23,7 @@ export class MidiaService {
           Authorization: environment.apiKey,
         },
       })
-      .pipe(map(this.mapImagens));
+      .pipe(map((resposta) => this.mapMidias(resposta, tipo)));
   }
 
   public selecionarMidiasMaisVotadas(tipo: TipoMidia) {
@@ -37,7 +37,7 @@ export class MidiaService {
           Authorization: environment.apiKey,
         },
       })
-      .pipe(map(this.mapImagens));
+      .pipe(map((resposta) => this.mapMidias(resposta, tipo)));
   }
 
   public selecionarFilmesEmCartaz() {
@@ -49,12 +49,25 @@ export class MidiaService {
           Authorization: environment.apiKey,
         },
       })
-      .pipe(map(this.mapImagens));
+      .pipe(map(this.mapFilmes));
   }
 
-  private mapImagens(x: MidiaApiResponse): MidiaApiResponse {
+  private mapMidias(x: MidiaApiResponse, tipoMidia: TipoMidia): MidiaApiResponse {
     return {
       ...x,
+      type: tipoMidia,
+      results: x.results.map((y) => ({
+        ...y,
+        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
+        backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+      })),
+    };
+  }
+
+  private mapFilmes(x: MidiaApiResponse): MidiaApiResponse {
+    return {
+      ...x,
+      type: TipoMidia.Filme,
       results: x.results.map((y) => ({
         ...y,
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,

@@ -34,7 +34,8 @@
       </div>
     </div>
     <app-carrossel-midias
-      [midias$]="(midiasPopulares$ | async)?.results ?? []"
+      [tipoMidia]="midiasPopulares.type"
+      [midias$]="midiasPopulares.results"
     ></app-carrossel-midias>
   }
 
@@ -71,7 +72,8 @@
       </div>
     </div>
     <app-carrossel-midias
-      [midias$]="(midiasMaisVotadas$ | async)?.results ?? []"
+      [tipoMidia]="midiasMaisVotadas.type"
+      [midias$]="midiasMaisVotadas.results"
     ></app-carrossel-midias>
   }
 
@@ -80,7 +82,8 @@
     <h2 class="fs-4 mb-4 mt-3">Filmes Em Cartaz</h2>
 
     <app-carrossel-midias
-      [midias$]="(filmesEmCartaz$ | async)?.results ?? []"
+      [tipoMidia]="tipoMidia.Filme"
+      [midias$]="filmesEmCartaz.results"
     ></app-carrossel-midias>
   }
 </div>
