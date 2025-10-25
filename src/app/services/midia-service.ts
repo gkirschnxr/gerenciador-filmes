@@ -4,13 +4,16 @@ import { environment } from '../../environments/environment';
 import { MidiaApiResponse } from '../models/midia-api-response';
 import { map, Observable } from 'rxjs';
 import { TipoMidia } from '../models/tipo-midia';
-import { DetalhesMidia } from '../models/detalhes-midia';
+import { DetalhesMidias } from '../models/detalhes-midia';
+import { VideosMidiaApiResponse } from '../models/videos-midia-api-response';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MidiaService {
   private readonly http = inject(HttpClient);
+  private readonly domSanitizer = inject(DomSanitizer);
   private readonly urlBase: string = 'https://api.themoviedb.org/3';
 
   public selecionarMidiasPopulares(tipo: TipoMidia) {
@@ -53,13 +56,16 @@ export class MidiaService {
       .pipe(map(this.mapFilmes));
   }
 
-  public selecionarDetalhesMidiaPorID(tipo: TipoMidia, idMidia: number): Observable<DetalhesMidia> {
+  public selecionarDetalhesMidiaPorID(
+    tipo: TipoMidia,
+    idMidia: number,
+  ): Observable<DetalhesMidias> {
     const tipoSelecionado = tipo === 'filme' ? 'movie' : 'tv';
 
     const urlCompleto = `${this.urlBase}/${tipoSelecionado}/${idMidia}?language=pt-BR`;
 
     return this.http
-      .get<DetalhesMidia>(urlCompleto, {
+      .get<DetalhesMidias>(urlCompleto, {
         headers: {
           Authorization: environment.apiKey,
         },
@@ -67,7 +73,38 @@ export class MidiaService {
       .pipe(map((resposta) => this.mapDetalhesMidia(resposta, tipo)));
   }
 
-  private mapDetalhesMidia(x: DetalhesMidia, tipo: TipoMidia): DetalhesMidia {
+  public selecionarVideosMidiaPorID(
+    tipo: TipoMidia,
+    idMidia: number,
+  ): Observable<VideosMidiaApiResponse> {
+    const tipoSelecionado = tipo === 'filme' ? 'movie' : 'tv';
+
+    const urlCompleto = `${this.urlBase}/${tipoSelecionado}/${idMidia}/videos?language=pt-BR`;
+
+    return this.http
+      .get<VideosMidiaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map((v) => this.mapVideosMidia(v)));
+  }
+
+  private mapVideosMidia(x: VideosMidiaApiResponse): VideosMidiaApiResponse {
+    return {
+      ...x,
+      results: x.results
+        .filter((v) => v.site.toLowerCase() === 'youtube')
+        .map((v) => ({
+          ...v,
+          key: this.domSanitizer.bypassSecurityTrustResourceUrl(
+            'https://youtube.com/embed/' + v.key,
+          ),
+        })),
+    };
+  }
+
+  private mapDetalhesMidia(x: DetalhesMidias, tipo: TipoMidia): DetalhesMidias {
     return {
       ...x,
       type: tipo,

@@ -1,6 +1,6 @@
 import { TipoMidia } from './tipo-midia';
 
-export interface DetalhesMidia {
+export interface DetalhesMidias {
   id: number;
   type: TipoMidia;
   adult: boolean;
@@ -20,11 +20,11 @@ export interface DetalhesMidia {
   budget: number;
   revenue: number;
   homepage: string;
-  genres: { id: number; name: string }[];
+  genres: { id: number; name: string } [];
   production_companies: {
     id: number;
     logo_path: string;
     name: string;
     origin_country: string;
-  }[];
+  } [];
 }
