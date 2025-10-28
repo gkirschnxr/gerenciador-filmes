@@ -25,6 +25,16 @@
                   </span>
                 </div>
               </div>
+
+              @if (detalhes.vote_average > 0) {
+                <div class="d-flex align-items-center gap-2">
+                  <app-icone-avaliacao
+                    [avaliacao]="detalhes.vote_average"
+                    [tamanhoPx]="55"
+                  ></app-icone-avaliacao>
+                  <span class="fw-semibold fs-5">Avaliação dos Usuários</span>
+                </div>
+              }
             </header>
 
             <article class="mt-4">
@@ -34,7 +44,7 @@
             </article>
           </div>
 
-          <hr>
+          <hr />
 
           @if ((videos$ | async)?.results; as videos) {
             <section class="mt-1">
@@ -51,23 +61,23 @@
   </div>
 }
 @if (creditos$ | async; as creditos) {
-<section class="container py-4 text-white">
-  <h4>Elenco Principal</h4>
+  <section class="container py-4 text-white">
+    <h4>Elenco Principal</h4>
 
-  <div class="row flex-nowrap overflow-x-scroll g-2 pb-3 mt-2 app-scrollbar-customizado">
-    @for (membroElenco of creditos.cast; track membroElenco.id) {
-    <div class="col-4 col-lg-2">
-      <div class="card rounded-3 h-100">
-        <img class="card-img-top" [src]="membroElenco.profile_path" [alt]="membroElenco.name" />
+    <div class="row flex-nowrap overflow-x-scroll g-2 pb-3 mt-2 app-scrollbar-customizado">
+      @for (membroElenco of creditos.cast; track membroElenco.id) {
+        <div class="col-4 col-lg-2">
+          <div class="card rounded-3 h-100">
+            <img class="card-img-top" [src]="membroElenco.profile_path" [alt]="membroElenco.name" />
 
-        <div class="card-body px-2">
-          <p class="card-title fw-semibold mb-0">{{ membroElenco.name }}</p>
+            <div class="card-body px-2">
+              <p class="card-title fw-semibold mb-0">{{ membroElenco.name }}</p>
 
-          <small class="text-secondary text-wrap">{{ membroElenco.character }}</small>
+              <small class="text-secondary text-wrap">{{ membroElenco.character }}</small>
+            </div>
+          </div>
         </div>
-      </div>
+      }
     </div>
-    }
-  </div>
-</section>
+  </section>
 }
