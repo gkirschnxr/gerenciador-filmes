@@ -125,7 +125,7 @@ export class MidiaService {
   private mapDetalhesMidia(x: DetalhesMidias, tipo: TipoMidia): DetalhesMidias {
     return {
       ...x,
-      type: tipo,
+      media_type: tipo,
       vote_average: x.vote_average * 10,
       poster_path: 'https://image.tmdb.org/t/p/w500/' + x.poster_path,
       backdrop_path: 'https://image.tmdb.org/t/p/original/' + x.backdrop_path,
@@ -135,7 +135,7 @@ export class MidiaService {
   private mapMidias(x: MidiaApiResponse, tipoMidia: TipoMidia): MidiaApiResponse {
     return {
       ...x,
-      type: tipoMidia,
+      media_type: tipoMidia,
       results: x.results.map((y) => ({
         ...y,
         vote_average: y.vote_average * 10,
@@ -148,7 +148,7 @@ export class MidiaService {
   private mapFilmes(x: MidiaApiResponse): MidiaApiResponse {
     return {
       ...x,
-      type: TipoMidia.Filme,
+      media_type: TipoMidia.Filme,
       results: x.results.map((y) => ({
         ...y,
         vote_average: y.vote_average * 10,

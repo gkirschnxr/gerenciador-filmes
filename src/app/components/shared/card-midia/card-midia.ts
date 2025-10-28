@@ -26,7 +26,7 @@ import { IconeAvaliacao } from "../icone-avaliacao/icone-avaliacao";
             class="card-img-top rounded-3"
             style="min-height: 270px"
             [src]="midia.poster_path"
-            [alt]="midia.title"
+            [alt]="midia.title ?? midia.name"
           />
         </div>
 

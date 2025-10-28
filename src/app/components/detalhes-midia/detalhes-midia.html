@@ -51,7 +51,7 @@
               <h3>Trailer</h3>
 
               <div class="ratio ratio-16x9 mt-4 rounded-pill">
-                <iframe [src]="videos.at(0)?.key" frameborder="0"></iframe>
+                <iframe class="rounded-4" [src]="videos.at(0)?.key" frameborder="0"></iframe>
               </div>
             </section>
           }
@@ -74,6 +74,26 @@
               <p class="card-title fw-semibold mb-0">{{ membroElenco.name }}</p>
 
               <small class="text-secondary text-wrap">{{ membroElenco.character }}</small>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="container py-4 text-white">
+    <h4>Produção</h4>
+
+    <div class="row flex-nowrap overflow-x-scroll g-2 pb-3 mt-2 app-scrollbar-customizado">
+      @for (membroProducao of creditos.crew; track membroProducao.id) {
+        <div class="col-4 col-lg-2">
+          <div class="card rounded-3 h-100">
+            <img class="card-img-top" [src]="membroProducao.profile_path" [alt]="membroProducao.name" />
+
+            <div class="card-body px-2">
+              <p class="card-title fw-semibold mb-0">{{ membroProducao.name }}</p>
+
+              <small class="text-secondary text-wrap">{{ membroProducao.job }}</small>
             </div>
           </div>
         </div>

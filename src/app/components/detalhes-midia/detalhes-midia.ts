@@ -4,7 +4,7 @@ import { filter, map, shareReplay, switchMap } from 'rxjs';
 import { MidiaService } from '../../services/midia-service';
 import { TipoMidia } from '../../models/tipo-midia';
 import { AsyncPipe } from '@angular/common';
-import { IconeAvaliacao } from "../shared/icone-avaliacao/icone-avaliacao";
+import { IconeAvaliacao } from '../shared/icone-avaliacao/icone-avaliacao';
 
 @Component({
   selector: 'app-detalhes-midia',
@@ -32,11 +32,11 @@ export class DetalhesMidia {
 
   protected readonly videos$ = this.detalhes$.pipe(
     switchMap((detalhes) =>
-      this.midiaService.selecionarVideosMidiaPorID(detalhes.type, detalhes.id),
+      this.midiaService.selecionarVideosMidiaPorID(detalhes.media_type, detalhes.id),
     ),
   );
 
   public readonly creditos$ = this.detalhes$.pipe(
-    switchMap((x) => this.midiaService.selecionarCreditosMidiaPorId(x.type, x.id)),
+    switchMap((x) => this.midiaService.selecionarCreditosMidiaPorId(x.media_type, x.id)),
   );
 }

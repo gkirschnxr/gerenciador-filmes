@@ -3,7 +3,7 @@ import { BehaviorSubject, switchMap } from 'rxjs';
 import { TipoMidia } from '../../models/tipo-midia';
 import { MidiaService } from '../../services/midia-service';
 import { AsyncPipe } from '@angular/common';
-import { BannerPrincipal } from '../banner-principal/banner-principal';
+import { BannerPrincipal } from '../shared/banner-principal/banner-principal';
 import { CarrosselMidias } from '../shared/carrossel-midias/carrossel-midias';
 
 @Component({
