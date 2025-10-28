@@ -7,6 +7,7 @@ import { TipoMidia } from '../models/tipo-midia';
 import { DetalhesMidias } from '../models/detalhes-midia';
 import { VideosMidiaApiResponse } from '../models/videos-midia-api-response';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CreditosMidiaApiResponse } from '../models/creditos-midia-api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -90,6 +91,23 @@ export class MidiaService {
       .pipe(map((v) => this.mapVideosMidia(v)));
   }
 
+  public selecionarCreditosMidiaPorId(
+    tipo: TipoMidia,
+    idMidia: number,
+  ): Observable<CreditosMidiaApiResponse> {
+    const tipoSelecionado = tipo === 'filme' ? 'movie' : 'tv';
+
+    const urlCompleto = `${this.urlBase}/${tipoSelecionado}/${idMidia}/credits?language=pt-BR`;
+
+    return this.http
+      .get<CreditosMidiaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map(this.mapCreditosMidia));
+  }
+
   private mapVideosMidia(x: VideosMidiaApiResponse): VideosMidiaApiResponse {
     return {
       ...x,
@@ -134,6 +152,24 @@ export class MidiaService {
         ...y,
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+      })),
+    };
+  }
+
+  private mapCreditosMidia(x: CreditosMidiaApiResponse): CreditosMidiaApiResponse {
+    return {
+      ...x,
+      cast: x.cast.map((y) => ({
+        ...y,
+        profile_path: y.profile_path
+          ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
+          : '/person-placeholder.png',
+      })),
+      crew: x.crew.map((y) => ({
+        ...y,
+        profile_path: y.profile_path
+          ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
+          : '/person-placeholder.png',
       })),
     };
   }

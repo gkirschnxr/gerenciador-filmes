@@ -4,13 +4,13 @@ export interface DetalhesMidias {
   id: number;
   type: TipoMidia;
   adult: boolean;
-  originial_language: string;
+  original_language: string;
   original_title: string;
   release_date?: string;
   first_air_date?: string;
   title?: string;
   name?: string;
-  overview: string;
+  overview?: string;
   popularity: number;
   poster_path: string;
   backdrop_path: string;
@@ -20,11 +20,6 @@ export interface DetalhesMidias {
   budget: number;
   revenue: number;
   homepage: string;
-  genres: { id: number; name: string } [];
-  production_companies: {
-    id: number;
-    logo_path: string;
-    name: string;
-    origin_country: string;
-  } [];
+  genres: { id: number; name: string }[];
+  production_companies: { id: number; logo_path: string; name: string; origin_country: string }[];
 }

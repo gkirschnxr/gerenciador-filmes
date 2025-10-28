@@ -8,21 +8,22 @@ export interface MidiaApiResponse {
   total_results: number;
 }
 
+// Representa tanto Filme quanto Série
 export interface Midia {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
   id: number;
+  adult: boolean;
   original_language: string;
   original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
   release_date?: string;
   first_air_date?: string;
   title?: string;
   name?: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  backdrop_path: string;
   video: boolean;
   vote_average: number;
   vote_count: number;
+  genre_ids: number[];
 }

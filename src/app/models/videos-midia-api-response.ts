@@ -1,8 +1,8 @@
-import { SafeResourceUrl } from "@angular/platform-browser";
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 export interface VideosMidiaApiResponse {
   id: number;
-  results: VideoMidia [];
+  results: VideoMidia[];
 }
 
 export interface VideoMidia {
@@ -10,10 +10,10 @@ export interface VideoMidia {
   iso_3166_1: string;
   name: string;
   key: string | SafeResourceUrl;
-  published_at: string;
   site: string;
   size: number;
   type: string;
   official: boolean;
+  published_at: string;
   id: string;
 }

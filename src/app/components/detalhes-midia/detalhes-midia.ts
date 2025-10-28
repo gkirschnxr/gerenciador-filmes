@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, shareReplay, switchMap, tap } from 'rxjs';
+import { filter, map, shareReplay, switchMap } from 'rxjs';
 import { MidiaService } from '../../services/midia-service';
 import { TipoMidia } from '../../models/tipo-midia';
 import { AsyncPipe } from '@angular/common';
@@ -33,6 +33,9 @@ export class DetalhesMidia {
     switchMap((detalhes) =>
       this.midiaService.selecionarVideosMidiaPorID(detalhes.type, detalhes.id),
     ),
-    tap((v) => console.log(v)),
+  );
+
+  public readonly creditos$ = this.detalhes$.pipe(
+    switchMap((x) => this.midiaService.selecionarCreditosMidiaPorId(x.type, x.id)),
   );
 }
