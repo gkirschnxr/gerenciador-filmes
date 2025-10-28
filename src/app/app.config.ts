@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, Routes } from '@angular/router';
 
@@ -17,12 +17,17 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/detalhes-midia/detalhes-midia').then((c) => c.DetalhesMidia),
   },
+  {
+    path: ':tipoMidia/:tipoColecaoMidia',
+    loadComponent: () =>
+      import('./components/listagem-midia/listagem-midia').then((c) => c.ListagemMidia),
+  },
 ];
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(),
   ],
