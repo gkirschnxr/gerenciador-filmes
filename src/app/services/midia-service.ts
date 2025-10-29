@@ -108,8 +108,8 @@ export class MidiaService {
       .pipe(map(this.mapCreditosMidia));
   }
 
-  public buscarMidias(query: string): Observable<ResultadoBuscaApiResponse> {
-    const urlCompleto = `${this.urlBase}/search/multi?query=${query}&language=pt-BR`;
+  public buscarMidias(query: string, pagina: number = 1): Observable<ResultadoBuscaApiResponse> {
+    const urlCompleto = `${this.urlBase}/search/multi?query=${query}&page=${pagina}&language=pt-BR`;
 
     return this.http
       .get<ResultadoBuscaApiResponse>(urlCompleto, {

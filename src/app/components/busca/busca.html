@@ -24,4 +24,21 @@
       }
     </div>
   }
+
+  @if (paginasDisponiveis$ | async; as paginasDisponiveis) {
+    <section id="paginacao" class="row justify-content-center mt-2 gap-2">
+      @for (pagina of paginasDisponiveis.paginas; track $index) {
+        <button
+          class="col-auto btn btn-sm rounded-circle"
+          (click)="paginaSubject$.next(pagina)"
+          [ngClass]="{
+            'btn-outline-primary': paginasDisponiveis.paginaAtual !== pagina,
+            'btn-primary': paginasDisponiveis.paginaAtual === pagina,
+          }"
+        >
+          {{ pagina }}
+        </button>
+      }
+    </section>
+  }
 </div>
