@@ -1,6 +1,6 @@
 <div class="container py-4">
   @if (cabecalhoMidiasSelecionadas$ | async; as cabecalho) {
-  <h2>{{ cabecalho.tipoMidia }} {{ cabecalho.tipoColecaoMidia }}</h2>
+  <h2 class="text-white">{{ cabecalho.tipoMidia }} {{ cabecalho.tipoColecaoMidia }}</h2>
   } @if (midiasSelecionadas$ | async; as resposta) {
   <div class="row g-3 mt-1">
     @for (midia of resposta.results; track midia.id) {

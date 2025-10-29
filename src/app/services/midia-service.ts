@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { MidiaApiResponse } from '../models/midia-api-response';
+import { MidiaApiResponse, ResultadoBuscaApiResponse } from '../models/midia-api-response';
 import { map, Observable } from 'rxjs';
 import { TipoMidia } from '../models/tipo-midia';
 import { DetalhesMidias } from '../models/detalhes-midia';
@@ -108,6 +108,18 @@ export class MidiaService {
       .pipe(map(this.mapCreditosMidia));
   }
 
+  public buscarMidias(query: string): Observable<ResultadoBuscaApiResponse> {
+    const urlCompleto = `${this.urlBase}/search/multi?query=${query}&language=pt-BR`;
+
+    return this.http
+      .get<ResultadoBuscaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map((res) => this.mapMidiasResultadoBusca(res)));
+  }
+
   private mapVideosMidia(x: VideosMidiaApiResponse): VideosMidiaApiResponse {
     return {
       ...x,
@@ -172,6 +184,19 @@ export class MidiaService {
         profile_path: y.profile_path
           ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
           : '/person-placeholder.jpg',
+      })),
+    };
+  }
+
+  private mapMidiasResultadoBusca(x: ResultadoBuscaApiResponse): ResultadoBuscaApiResponse {
+    return {
+      ...x,
+      results: x.results.map((y) => ({
+        ...y,
+        media_type: (y.media_type.toString() === 'movie' ? 'filme' : 'tv') as TipoMidia,
+        vote_average: y.vote_average * 10,
+        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
+        backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
       })),
     };
   }

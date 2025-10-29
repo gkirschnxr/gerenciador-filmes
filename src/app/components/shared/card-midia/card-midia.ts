@@ -10,7 +10,7 @@ import { IconeAvaliacao } from "../icone-avaliacao/icone-avaliacao";
   template: `
     @if (midia) {
       <a
-        class="text-decoration-none text-dark"
+        class="text-decoration-none text-white"
         [title]="midia.title ?? midia.name"
         [routerLink]="['/', tipoMidia, midia.id, 'detalhes']"
         ><div class="card rounded-3 app-card-filme">
@@ -31,7 +31,7 @@ import { IconeAvaliacao } from "../icone-avaliacao/icone-avaliacao";
         </div>
 
         <div class="mt-2">
-          <small class="text-muted">{{ midia.release_date ?? midia.first_air_date }}</small>
+          <small class="text-white fst-italic">{{ midia.release_date ?? midia.first_air_date }}</small>
           <p class="app-titulo-card fw-bold">
             {{ (midia.title ?? midia.name)?.slice(0, 30) }}
           </p>
