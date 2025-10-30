@@ -1,14 +1,24 @@
 @if (detalhes$ | async; as detalhes) {
-  <div class="app-banner-fundo" [style.background-image]="'url(' + detalhes.backdrop_path + ')'">
+  <div
+    class="app-banner-fundo"
+    [ngClass]="{ 'sem-backdrop': !detalhes.backdrop_path }"
+    [style.background-image]="detalhes.backdrop_path ? 'url(' + detalhes.backdrop_path + ')' : null">
     <div class="app-overlay-banner">
       <main class="container py-5">
         <section aria-label="Detalhes do Filme" class="row justify-content-center g-5">
-          <div class="col-lg-3">
-            <img
-              [src]="detalhes.poster_path"
-              alt="Poster de {{ detalhes.title ?? detalhes.name }}"
-              class="img-fluid rounded-3"
-            />
+          <div class="app-poster col-lg-3">
+            @if (detalhes.poster_path) {
+              <img
+                [src]="detalhes.poster_path"
+                [alt]="'Poster de ' + (detalhes.title ?? detalhes.name)"
+                class="img-fluid rounded-3 app-poster__img"
+              />
+            } @else {
+              <div class="app-poster__ph text-black-50">
+                <i class="bi bi-film"></i>
+                <small>Sem imagem</small>
+              </div>
+            }
           </div>
           <div class="col">
             <header class="d-flex flex-wrap justify-content-between align-items-top gap-3">

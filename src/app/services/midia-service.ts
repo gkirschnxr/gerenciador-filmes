@@ -17,6 +17,15 @@ export class MidiaService {
   private readonly domSanitizer = inject(DomSanitizer);
   private readonly urlBase: string = 'https://api.themoviedb.org/3';
 
+  private tmdbImg(
+    path: string | null | undefined,
+    size: 'w500' | 'original' = 'w500',
+  ): string | null {
+    if (!path) return null;
+    const base = 'https://image.tmdb.org/t/p/';
+    return `${base}${size}${path}`;
+  }
+
   public selecionarMidiasPopulares(tipo: TipoMidia) {
     const tipoSelecionado = tipo === 'filme' ? 'movie' : 'tv';
 
@@ -139,8 +148,8 @@ export class MidiaService {
       ...x,
       media_type: tipo,
       vote_average: x.vote_average * 10,
-      poster_path: 'https://image.tmdb.org/t/p/w500/' + x.poster_path,
-      backdrop_path: 'https://image.tmdb.org/t/p/original/' + x.backdrop_path,
+      poster_path: this.tmdbImg(x.poster_path, "w500"),
+      backdrop_path: this.tmdbImg(x.backdrop_path, 'original')
     };
   }
 
@@ -151,8 +160,8 @@ export class MidiaService {
       results: x.results.map((y) => ({
         ...y,
         vote_average: y.vote_average * 10,
-        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
-        backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+        poster_path: this.tmdbImg(y.poster_path, 'w500'),
+        backdrop_path: this.tmdbImg(y.backdrop_path, 'original'),
       })),
     };
   }
@@ -164,8 +173,8 @@ export class MidiaService {
       results: x.results.map((y) => ({
         ...y,
         vote_average: y.vote_average * 10,
-        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
-        backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+        poster_path: this.tmdbImg(y.poster_path, 'w500'),
+        backdrop_path: this.tmdbImg(y.backdrop_path, 'original'),
       })),
     };
   }
@@ -195,8 +204,8 @@ export class MidiaService {
         ...y,
         media_type: (y.media_type.toString() === 'movie' ? 'filme' : 'tv') as TipoMidia,
         vote_average: y.vote_average * 10,
-        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
-        backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+        poster_path: this.tmdbImg(y.poster_path, 'w500'),
+        backdrop_path: this.tmdbImg(y.backdrop_path, 'original'),
       })),
     };
   }
